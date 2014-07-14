@@ -26,25 +26,34 @@ class IncomingWebHooks(object):
         self.channel = channel
         self.api_url = 'https://%s.slack.com/services/hooks/incoming-webhook' % team
 
-    def send(self, msg, channel=None, attachments=None):
+    def send(self, msg, channel=None, attachments=None, unfurl_links=False):
         if not channel and self.channel:
             channel = self.channel
         elif not (channel or self.channel):
             raise
 
-        payload = {'text': msg,
-                   'channel': channel,
-                   'username': 'PinkoiBot',
-                   'icon_emoji': ':mypinkoi:'}
+        payload = {}
         if attachments:
-            payload.update({'attachments': attachments})
+            if isinstance(attachments, list):
+                payload.update({'attachments': attachments})
+            else:
+                payload.update({'attachments': [attachments, ]})
+        else:
+            payload.update({'text': msg})
+
+        payload.update({
+                        'unfurl_links': unfurl_links,
+                        'channel': channel,
+                        'username': 'PinkoiBot',
+                        'icon_emoji': ':mypinkoi:'})
 
         data = {'payload': json.dumps(payload)}
         params = {'token': self.token}
         return requests.post(self.api_url, data=data, params=params)
 
-    def send_with_attachments(self, msg, channel=None, attachments=None):
-        return self.send(msg, channel, attachments)
+    def send_with_attachments(self, msg, channel=None, attachments=None,
+            unfurl_links=False):
+        return self.send(msg, channel, attachments, unfurl_links)
 
     @staticmethod
     def render_attachments(fallback, fields_title, fields_value, text=None,
@@ -58,7 +67,7 @@ class IncomingWebHooks(object):
                           ]
                  }
         result.update({"text": text}) if text else None
-        result.update({"pretext": pretext}) if pretext else None
+        result.update({"pretext": pretext if pretext else fallback})
         return result
 
 if __name__ == '__main__':
