@@ -1,2 +1,4 @@
 *.pyc
+setting.py
+test.py
 venv/
