@@ -18,7 +18,7 @@ class SlackBot(object):
         params = {'token': self.token,
                   'channel': channel}
 
-        return requests.post(self.api_url, data=msg, params=params)
+        return requests.post(self.api_url, data=msg.encode('utf8'), params=params)
 
 class IncomingWebHooks(object):
     def __init__(self, token, team, channel=None):
