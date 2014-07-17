@@ -39,7 +39,7 @@ class IncomingWebHooks(object):
             else:
                 payload.update({'attachments': [attachments, ]})
         else:
-            payload.update({'text': msg})
+            payload.update({'text': msg.encode('utf8')})
 
         payload.update({
                         'unfurl_links': unfurl_links,
