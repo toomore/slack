@@ -2,3 +2,4 @@
 setting.py
 test.py
 venv/
+*_test.go
