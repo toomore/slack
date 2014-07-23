@@ -19,7 +19,6 @@ func (bot *slackbot) send(channel, text string) {
 	params.Add("channel", channel)
 	url_path := fmt.Sprintf("https://%s.slack.com/services/hooks/slackbot?%s",
 		bot.team, params.Encode())
-	fmt.Println(url_path)
 	body := bytes.NewBufferString(text)
 	http.Post(url_path, "text/plain", body)
 }
