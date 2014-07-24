@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"flag"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -23,12 +22,12 @@ func (bot *slackbot) send(channel, text string) {
 	http.Post(url_path, "text/plain", body)
 }
 
-func main() {
-	team := flag.String("team", "pinkoi", "Team name")
-	token := flag.String("token", "...", "Slack token")
-	text := flag.String("text", "Hello Wrold! [from golang]", "Say something...")
-	channel := flag.String("chnl", "@toomore", "Send to who ...")
-	flag.Parse()
-	bot := slackbot{*team, *token}
-	bot.send(*channel, *text)
-}
+//func main() {
+//	team := flag.String("team", "pinkoi", "Team name")
+//	token := flag.String("token", "...", "Slack token")
+//	text := flag.String("text", "Hello Wrold! [from golang]", "Say something...")
+//	channel := flag.String("chnl", "@toomore", "Send to who ...")
+//	flag.Parse()
+//	bot := slackbot{*team, *token}
+//	bot.send(*channel, *text)
+//}
