@@ -1,8 +1,16 @@
 package main
 
-import "net/http"
 import "fmt"
+import "net/http"
+import "net/url"
 import "strings"
+
+func BotSend(form url.Values) {
+	bot := slackbot{"pinkoi", "..."}
+	channel := fmt.Sprintf("%s%s", "#", form["channel_name"][0])
+	text := fmt.Sprintf("@%s: %s [from golang bot]", form["user_name"][0], form["text"][0][len("ok go "):])
+	bot.send(channel, text)
+}
 
 func index(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(writer, request)
@@ -10,10 +18,7 @@ func index(writer http.ResponseWriter, request *http.Request) {
 		request.ParseForm()
 		fmt.Println(request.Form)
 		if strings.HasPrefix(request.Form["text"][0], "ok go") {
-			bot := slackbot{"pinkoi", "..."}
-			channel := fmt.Sprintf("%s%s", "#", request.Form["channel_name"][0])
-			text := fmt.Sprintf("@%s: %s [from golang bot]", request.Form["user_name"][0], request.Form["text"][0][len("ok go "):])
-			bot.send(channel, text)
+			BotSend(request.Form)
 		}
 	}
 }
