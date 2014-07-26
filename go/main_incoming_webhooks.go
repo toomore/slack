@@ -28,7 +28,22 @@ func (bot *IncomingWebHooks) send(channel, text string) {
 	http.Post(url_path, "text/plain", body)
 }
 
+func (bot *IncomingWebHooks) renderAtta(fallback, text, title, value string) map[string]interface{} {
+	result := make(map[string]interface{})
+	result["fallback"] = fallback
+	result["pretext"] = fallback
+	result["color"] = "#5060ef"
+	fields := make(map[string]interface{})
+	fields["title"] = title
+	fields["value"] = value
+	fields["short"] = false
+	result["fields"] = []map[string]interface{}{fields}
+	return result
+}
+
 func main() {
 	bot := IncomingWebHooks{"pinkoi", "..."}
-	bot.send("@toomore", "From IncomingWebHooks.")
+	//bot.send("@toomore", "From IncomingWebHooks.")
+	//j, _ := json.Marshal(bot.renderAtta("fallback", "text", "title", "value"))
+	//fmt.Printf("%s", j)
 }
