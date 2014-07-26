@@ -13,7 +13,7 @@ type IncomingWebHooks struct {
 	token string
 }
 
-func (bot *IncomingWebHooks) send(channel, text string) {
+func (bot *IncomingWebHooks) Send(channel, text string) {
 	text_map := make(map[string]interface{})
 	text_map["text"] = text
 	text_map["channel"] = channel
@@ -34,7 +34,7 @@ func (bot *IncomingWebHooks) Post(text_map map[string]interface{}) {
 	http.Post(url_path, "text/plain", body)
 }
 
-func (bot *IncomingWebHooks) renderAtta(fallback, text, title, value string) map[string]interface{} {
+func (bot *IncomingWebHooks) RenderAtta(fallback, text, title, value string) map[string]interface{} {
 	result := make(map[string]interface{})
 	result["fallback"] = fallback
 	result["pretext"] = fallback
@@ -49,7 +49,7 @@ func (bot *IncomingWebHooks) renderAtta(fallback, text, title, value string) map
 
 func main() {
 	bot := IncomingWebHooks{"pinkoi", "..."}
-	bot.send("@toomore", "From IncomingWebHooks.")
+	bot.Send("@toomore", "From IncomingWebHooks.")
 	//j, _ := json.Marshal(bot.renderAtta("fallback", "text", "title", "value"))
 	//fmt.Printf("%s", j)
 }
