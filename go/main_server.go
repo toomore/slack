@@ -1,19 +1,29 @@
 package main
 
-import "net/http"
 import "fmt"
+import "net/http"
+import "net/url"
 import "strings"
+
+func BotSend(formdata *url.Values, msg string) {
+	form := *formdata
+	bot := slackbot{"pinkoi", "..."}
+	channel := fmt.Sprintf("%s%s", "#", form.Get("channel_name"))
+	text := fmt.Sprintf("@%s: %s [from golang bot]", form.Get("user_name"), msg)
+	bot.send(channel, text)
+}
 
 func index(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(writer, request)
 	if request.Method == "POST" {
 		request.ParseForm()
 		fmt.Println(request.Form)
-		if strings.HasPrefix(request.Form["text"][0], "ok go") {
-			bot := slackbot{"pinkoi", "..."}
-			channel := fmt.Sprintf("%s%s", "#", request.Form["channel_name"][0])
-			text := fmt.Sprintf("@%s: %s [from golang bot]", request.Form["user_name"][0], request.Form["text"][0][len("ok go "):])
-			bot.send(channel, text)
+		switch {
+		case strings.HasPrefix(request.Form.Get("text"), "ok go Hello"):
+			BotSend(&request.Form, request.Form.Get("text")[len("ok go "):])
+
+		case strings.HasPrefix(request.Form.Get("text"), "ok go time"):
+			BotSend(&request.Form, request.Form.Get("text")[len("ok go "):])
 		}
 	}
 }
