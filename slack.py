@@ -44,8 +44,8 @@ class IncomingWebHooks(object):
         payload.update({
                         'unfurl_links': unfurl_links,
                         'channel': channel,
-                        'username': 'PinkoiBot',
-                        'icon_emoji': ':mypinkoi:'})
+                        'username': '...Bot',
+                        'icon_emoji': ':my...:'})
 
         data = {'payload': json.dumps(payload)}
         params = {'token': self.token}

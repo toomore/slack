@@ -7,7 +7,7 @@ import "strings"
 
 func BotSend(formdata *url.Values, msg string) {
 	form := *formdata
-	bot := slackbot{"pinkoi", "..."} // in Slackbot
+	bot := slackbot{"...", "..."} // in Slackbot
 	channel := fmt.Sprintf("%s%s", "#", form.Get("channel_name"))
 	text := fmt.Sprintf("@%s: %s [from golang bot]", form.Get("user_name"), msg)
 	bot.send(channel, text)
@@ -26,9 +26,9 @@ func index(writer http.ResponseWriter, request *http.Request) {
 			BotSend(&request.Form, request.Form.Get("text")[len("ok go "):])
 
 		case strings.HasPrefix(request.Form.Get("text"), "ok go radio"):
-            radio_url := GetUrl(request.Form.Get("text")[len("ok go radio"):])
+			radio_url := GetUrl(request.Form.Get("text")[len("ok go radio"):])
 			//BotSend(&request.Form, request.Form.Get("text")[len("ok go radio"):])
-            BotSend(&request.Form, fmt.Sprintf("```%s```", radio_url))
+			BotSend(&request.Form, fmt.Sprintf("```%s```", radio_url))
 		}
 	}
 }

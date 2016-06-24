@@ -7,7 +7,7 @@ import "strings"
 
 func BotSend(formdata *url.Values, msg string) {
 	form := *formdata
-	bot := slackbot{"pinkoi", "..."}
+	bot := slackbot{"...", "..."}
 	channel := fmt.Sprintf("%s%s", "#", form.Get("channel_name"))
 	text := fmt.Sprintf("@%s: %s [from golang bot]", form.Get("user_name"), msg)
 	bot.send(channel, text)

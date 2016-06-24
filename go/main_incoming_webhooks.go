@@ -17,8 +17,8 @@ func (bot *IncomingWebHooks) Send(channel, text string) {
 	text_map := make(map[string]interface{})
 	text_map["text"] = text
 	text_map["channel"] = channel
-	text_map["username"] = "PinkoiBot [go]"
-	text_map["icon_emoji"] = ":mypinkoi:"
+	text_map["username"] = "...Bot [go]"
+	text_map["icon_emoji"] = ":my...:"
 
 	bot.Post(text_map)
 }
@@ -27,8 +27,8 @@ func (bot *IncomingWebHooks) SendAtta(channel, text, fallback, title, value stri
 	text_map := make(map[string]interface{})
 	text_map["text"] = text
 	text_map["channel"] = channel
-	text_map["username"] = "PinkoiBot [go]"
-	text_map["icon_emoji"] = ":mypinkoi:"
+	text_map["username"] = "...Bot [go]"
+	text_map["icon_emoji"] = ":my...:"
 
 	atta := bot.RenderAtta(fallback, text, title, value)
 	text_map["attachments"] = []map[string]interface{}{atta}
@@ -60,7 +60,7 @@ func (bot *IncomingWebHooks) RenderAtta(fallback, text, title, value string) map
 }
 
 func main() {
-	bot := IncomingWebHooks{"pinkoi", "..."}
+	bot := IncomingWebHooks{"...", "..."}
 	//bot.Send("@toomore", "From IncomingWebHooks.")
 	bot.SendAtta("@toomore", "text", "fallback", "title", "value")
 	//j, _ := json.Marshal(bot.renderAtta("fallback", "text", "title", "value"))
