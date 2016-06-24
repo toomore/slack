@@ -3,6 +3,7 @@ package slackbot
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 )
@@ -22,7 +23,8 @@ func NewBot(team, token string) *Bot {
 }
 
 // Send message
-func (b Bot) Send(channel, text string) {
+func (b Bot) Send(channel, text string) (*http.Response, error) {
 	b.params.Add("channel", channel)
-	http.Post(fmt.Sprintf("%s?%s", b.baseurl, b.params.Encode()), "text/plain", bytes.NewBufferString(text))
+	log.Println(">>> params: ", b.params.Encode())
+	return http.Post(fmt.Sprintf("%s?%s", b.baseurl, b.params.Encode()), "text/plain", bytes.NewBufferString(text))
 }
